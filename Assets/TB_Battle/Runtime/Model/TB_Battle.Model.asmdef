@@ -1,0 +1,13 @@
+{
+    "name": "TB_Battle.Model",
+    "references": ["GUID:4d210a901fc93f76190134dcf6cbda8a"],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
