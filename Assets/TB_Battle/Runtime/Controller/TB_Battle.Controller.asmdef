@@ -1,0 +1,4 @@
+{
+	"name": "TB_Battle.Controller",
+	"references":[ "GUID:9b9c5a037057385cc8943534f4616c0f", "GUID:4d210a901fc93f76190134dcf6cbda8a" ]
+}
