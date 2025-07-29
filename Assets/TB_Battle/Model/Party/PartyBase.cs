@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
-using TB_Battle.Runtime.Data;
-using TB_Battle.Runtime.Model.Entity;
+using TB_Battle.Data;
+using TB_Battle.Model.Entity;
 
-namespace TB_Battle.Runtime.Model.Party
+namespace TB_Battle.Model.Party
 {
     public abstract class PartyBase : IParty
     {

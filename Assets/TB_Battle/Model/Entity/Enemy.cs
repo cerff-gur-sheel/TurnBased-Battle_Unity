@@ -1,6 +1,6 @@
-using TB_Battle.Runtime.Data;
+using TB_Battle.Data;
 
-namespace TB_Battle.Runtime.Model.Entity
+namespace TB_Battle.Model.Entity
 {
     public class Enemy : EntityBase
     {

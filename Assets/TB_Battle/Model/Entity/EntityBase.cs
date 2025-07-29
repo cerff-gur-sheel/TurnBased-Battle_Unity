@@ -1,7 +1,9 @@
-using TB_Battle.Runtime.Data;
+using System.Collections.Generic;
+using TB_Battle.Data;
+using TB_Battle.Model.Action;
 using UnityEngine;
 
-namespace TB_Battle.Runtime.Model.Entity
+namespace TB_Battle.Model.Entity
 {
     public abstract class EntityBase : IEntity
     {
@@ -16,11 +18,15 @@ namespace TB_Battle.Runtime.Model.Entity
         {
             _data = data;
             Health = data.life;
+            Attacks = new List<Attack>();
+            foreach (var attackData in data.attacks) Attacks.Add(new Attack(attackData));
         }
 
         public virtual void TakeDamage(int damage)
         {
             Health = Mathf.Max(Health - damage, 0);
         }
+
+        public List<Attack> Attacks { get; }
     }
 }

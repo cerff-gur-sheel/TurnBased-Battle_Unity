@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using TB_Battle.Runtime.Model.Entity;
+using TB_Battle.Model.Entity;
 
-namespace TB_Battle.Runtime.Model.Party
+namespace TB_Battle.Model.Party
 {
     public interface IParty
     {
