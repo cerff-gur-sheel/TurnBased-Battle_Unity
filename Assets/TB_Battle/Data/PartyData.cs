@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace TB_Battle.Data
 {
-    [CreateAssetMenu(fileName = "PartyData", menuName = "Scriptable Objects/PartyData")]
+    [CreateAssetMenu(fileName = "PartyData", menuName = "Scriptable Objects/Party")]
     public class PartyData : ScriptableObject
     {
         public string groupName; 

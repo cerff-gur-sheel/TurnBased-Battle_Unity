@@ -3,7 +3,7 @@ using UnityEngine;
 namespace TB_Battle.Data
 {
     
-    [CreateAssetMenu(fileName = "EntityData", menuName = "Scriptable Objects/EntityData")]
+    [CreateAssetMenu(fileName = "EntityData", menuName = "Scriptable Objects/Attack")]
     public class AttackData : ScriptableObject
     {
         public string attackName;

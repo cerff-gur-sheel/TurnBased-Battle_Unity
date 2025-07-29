@@ -10,5 +10,7 @@ namespace TB_Battle.Model.Entity
         int Health { get;}
         void TakeDamage(int damage);
         List<Attack> Attacks { get; }
+        int Mana { get; set; }
+        int Energy { get; set; }
     }
 }

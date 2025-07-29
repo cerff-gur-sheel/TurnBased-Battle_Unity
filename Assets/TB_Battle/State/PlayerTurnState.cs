@@ -22,7 +22,7 @@ namespace TB_Battle.State
 
         public void ExecuteAttack(IEntity target)
         {
-            _player.Attacks[0].Execute(target);
+            
         }
 
         public void Exit()

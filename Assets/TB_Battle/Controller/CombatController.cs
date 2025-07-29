@@ -27,11 +27,10 @@ namespace TB_Battle.Controller
 
         private void CombatLoop()
         {
-            if (Player.IsGroupAlive && Enemy.IsGroupAlive)
+            if (!Player.IsGroupAlive || !Enemy.IsGroupAlive) return;
+            if (_currentTurn == Turn.Player)
             {
                 
-                
-                // todo: play combat
             }
         }
 
