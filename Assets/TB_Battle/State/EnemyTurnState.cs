@@ -1,32 +1,80 @@
+using System;
+using System.Linq;
 using TB_Battle.Controller;
+using TB_Battle.Model.Action;
 using TB_Battle.Model.Entity;
 using TB_Battle.Model.Party;
+using UnityEngine;
+using Random = System.Random;
 
 namespace TB_Battle.State
 {
-    public class EnemyTurnState 
+    public class EnemyTurnState : ITurnState
     {
         private CombatController _controller;
-        private IEntity _source;
-        private IParty _targetParty;
+        private IParty _enemyParty;
+        private IParty _playerParty;
         
-        public void Enter(CombatController controller, IEntity source, IParty targetParty)
+        public void Enter(CombatController controller, IParty source, IParty targetParty)
         {
             _controller = controller;
-            _source = source; 
-            _targetParty = targetParty;
-            // todo: activate UI
+            _enemyParty = source;
+            _playerParty = targetParty; 
+        }
+        
+        private static IAction SelectAction(IEntity entity)
+        {
+            var validAttacks = entity.Attacks
+                .Where(a => entity.Energy >= a.Energy && entity.Mana >= a.Mana)
+                .ToList();
+
+            if (validAttacks.Count == 0)
+                return entity.Await; // too tired to execute any attack
             
-            var target = _controller.Player.Entities[0];
-            ExecuteAttack(); // using for test
+            var randomIndex = UnityEngine.Random.Range(0, validAttacks.Count);
+            return validAttacks[randomIndex];
+        }
+        
+        private static IEntity SelectTarget(IParty target)
+        {
+            if (!target.IsGroupAlive)
+                throw new InvalidOperationException("Cannot select a target from a dead party.");
+
+            var aliveEntities = target.Entities.Where(e => e.IsAlive).ToList();
+            if (aliveEntities.Count == 0)
+                throw new InvalidOperationException("No alive entities to select.");
+
+            var random = new Random();
+            return aliveEntities[random.Next(aliveEntities.Count)];
+        }
+        
+        private void ExecuteAction(IAction action, IEntity target)
+        {
+            action.Execute(target);
             Exit();
         }
 
-        private void ExecuteAttack()
+        private void ExecuteAction(IAction action, IParty target)
         {
-            _source.Attacks[0].Execute(_source, _targetParty, 0);
+            action.Execute(target);
+            Exit();
         }
-
+        
+        public void Execute()
+        {
+            foreach (var entity in _enemyParty.Entities)
+            {
+                var action = SelectAction(entity);
+                if (action is Await)
+                {
+                    action.Execute(entity);
+                    break;
+                }
+                var target = SelectTarget(_playerParty);
+                ExecuteAction(action, target);
+            }
+        }
+        
         public void Exit()
         {
             _controller.ToggleTurn();

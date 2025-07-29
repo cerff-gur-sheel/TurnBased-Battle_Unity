@@ -19,7 +19,7 @@ namespace TB_Battle.Model.Entity
             _data = data;
             Health = data.life;
             Attacks = new List<Attack>();
-            foreach (var attackData in data.attacks) Attacks.Add(new Attack(attackData));
+            foreach (var attackData in data.attacks) Attacks.Add(new Attack(attackData, this));
             
             Mana = data.Mana;
             _maxMana = Mana;
@@ -50,5 +50,7 @@ namespace TB_Battle.Model.Entity
             get => _energy; 
             set => _energy = value < 0 ? Mathf.Max(Mana - value, 0) : Mathf.Max(Mana + value, _maxEnergy);
         }
+
+        public IAction Await => new Await(this);
     }
 }

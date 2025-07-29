@@ -6,6 +6,9 @@ namespace TB_Battle.Model.Action
     public interface IAction
     {
         string Name { get; }
-        void Execute(IEntity source, IParty party, int target = -10);
+        IEntity Entity { get; }
+        void Execute();
+        void Execute(IParty party) => Execute(null, party);
+        void Execute(IEntity target, IParty party = null);
     }
 }

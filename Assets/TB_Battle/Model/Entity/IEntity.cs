@@ -9,8 +9,12 @@ namespace TB_Battle.Model.Entity
         bool IsAlive { get; }
         int Health { get;}
         void TakeDamage(int damage);
-        List<Attack> Attacks { get; }
         int Mana { get; set; }
         int Energy { get; set; }
+        List<Attack> Attacks { get; }
+        /// <summary>
+        /// Wait to next turn
+        /// </summary>
+        IAction Await { get; }
     }
 }

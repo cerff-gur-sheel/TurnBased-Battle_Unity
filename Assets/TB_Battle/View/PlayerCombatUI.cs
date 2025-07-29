@@ -13,7 +13,10 @@ namespace TB_Battle.View
 
         private void Start()
         {
-            _controller.Initialize(playerGroup, enemyGroup, CombatController.Turn.Player);
+            _controller.Initialize(
+                playerGroup, 
+                enemyGroup, 
+                CombatController.Turn.Player);
         }
 
         private void AttackButton(AttackData attack) { }
