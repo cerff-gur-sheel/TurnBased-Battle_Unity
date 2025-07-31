@@ -19,11 +19,12 @@ namespace TB_Battle.Model.Entity
             _data = data;
             Health = data.life;
             Attacks = new List<Attack>();
-            foreach (var attackData in data.attacks) Attacks.Add(new Attack(attackData, this));
+            foreach (var attackData in data.attacks) 
+                Attacks.Add(new Attack(attackData, this));
             
-            Mana = data.Mana;
+            Mana = data.mana;
             _maxMana = Mana;
-            Energy = data.Energy;
+            Energy = data.energy;
             _maxEnergy = Energy;
         }
 

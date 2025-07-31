@@ -2,7 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 
-namespace TB_Battle.View
+namespace TB_Battle.Utils
 {
     [Serializable]
     public class ButtonOptionsDictionary
@@ -15,6 +15,5 @@ namespace TB_Battle.View
             this.buttonObject = buttonObject;
             this.tmpText = tmpText;
         }
-
     }
 }

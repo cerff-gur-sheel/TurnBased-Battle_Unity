@@ -5,13 +5,11 @@ namespace TB_Battle.State
 {
     public class PlayerTurnState : ITurnState 
     {
-        private CombatController _controller;
         private IParty _enemyParty;
         private IParty _playerParty;
         
-        public void Enter(CombatController controller, IParty source, IParty targetParty)
+        public void Enter(IParty source, IParty targetParty)
         {
-            _controller = controller;
             _playerParty = source; 
             _enemyParty = targetParty;
         }

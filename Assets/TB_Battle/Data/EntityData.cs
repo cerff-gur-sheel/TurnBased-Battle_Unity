@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace TB_Battle.Data
 {
@@ -9,7 +10,7 @@ namespace TB_Battle.Data
         public string entityName;
         public int life;
         public List<AttackData> attacks;
-        public int Mana;
-        public int Energy;
+        public int mana;
+        public int energy;
     }
 }

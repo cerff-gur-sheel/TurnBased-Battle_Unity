@@ -4,7 +4,7 @@ using TB_Battle.State;
 
 namespace TB_Battle.Controller
 {
-    public abstract class CombatController
+    public static class CombatController
     {
         public enum Turn
         {
@@ -12,21 +12,19 @@ namespace TB_Battle.Controller
             Enemy
         }
 
-        private Turn _currentTurn;
-        
-        public IParty Player { get; private set; }
-        public IParty Enemy { get; private set; }
+        private static Turn _currentTurn;
 
+        private static IParty Player { get; set; }
+        private static IParty Enemy { get; set; }
         
-        public void Initialize(PartyData playerData, PartyData enemyData, Turn initialTurn)
+        internal static void Initialize(PartyData playerData, PartyData enemyData, Turn initialTurn)
         {
             _currentTurn = initialTurn;
             Player = new PlayerParty(playerData);
             Enemy = new EnemyParty(enemyData);
-            CombatLoop();
         }
 
-        private void CombatLoop()
+        private static void CombatLoop()
         {
             if (!Player.IsGroupAlive || !Enemy.IsGroupAlive) return;
             if (_currentTurn == Turn.Player)
@@ -39,7 +37,7 @@ namespace TB_Battle.Controller
             }
         }
 
-        public void ToggleTurn()
+        public static void ToggleTurn()
         {
             _currentTurn = _currentTurn == Turn.Player ? Turn.Enemy : Turn.Player;
             CombatLoop();
