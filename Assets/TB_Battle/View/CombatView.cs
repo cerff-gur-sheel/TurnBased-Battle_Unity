@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using TB_Battle.Controller;
 using TB_Battle.Data;
 using TB_Battle.Model.Action;
@@ -11,20 +12,15 @@ namespace TB_Battle.View
 {
     public class CombatView 
     {
-        private PartyData _playerGroup;
-        private PartyData _enemyGroup;
-        
         private List<ButtonOptionsDictionary> _buttonOptionsDictionary;
-
-        private RectTransform _parent;
-        private TMP_FontAsset _fontAsset;
         
-        private void Start()
+        protected void Start(PartyData playerGroup, PartyData enemyGroup)
         {
-            CombatController.Initialize(_playerGroup,_enemyGroup, CombatController.Turn.Player);
+            CombatController.Initialize(playerGroup,enemyGroup, CombatController.Turn.Player);
         }
 
-        protected void ShowActionsOfHeroOnGUI(List<IAction> actions, GameObject prefab = null)
+        protected void ShowActionsOfHeroOnGUI(
+            List<IAction> actions, RectTransform parent, TMP_FontAsset fontAsset, GameObject prefab = null)
         {
             if (_buttonOptionsDictionary != null)
             {
@@ -39,7 +35,7 @@ namespace TB_Battle.View
             foreach (var action in actions)
             {
                 var (obj, tmp) =
-                    prefab ? CreateButton(action, _parent, prefab) : CreateButton(action, _parent, _fontAsset);
+                    prefab ? CreateButton(action, parent, prefab) : CreateButton(action, parent, fontAsset);
                 _buttonOptionsDictionary.Add(new ButtonOptionsDictionary(obj, tmp));
             }
         }
@@ -87,7 +83,7 @@ namespace TB_Battle.View
         private static (GameObject, TextMeshProUGUI) CreateButton(
             IAction action, RectTransform parent, GameObject prefab)
         {
-            var buttonObject = GameObject.Instantiate(prefab, parent);
+            var buttonObject = Object.Instantiate(prefab, parent);
             buttonObject.name = $"Button_{action.Name}";
 
             var tmpText = buttonObject.GetComponentInChildren<TextMeshProUGUI>();
@@ -97,16 +93,15 @@ namespace TB_Battle.View
             }
 
             var button = buttonObject.GetComponent<Button>();
-            if (button != null)
-            {
-                const int value = 99;
-                button.onClick.AddListener(() => SelectOption(value));
-            }
+            if (button == null) return (buttonObject, tmpText);
+            const int value = 99;
+            button.onClick.AddListener(() => SelectOption(value));
 
             return (buttonObject, tmpText);
         }
 
         
+        [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
         protected static void SelectOption(int value)
         {
             Debug.Log($"Button Pressed with value: {value}");
@@ -114,6 +109,7 @@ namespace TB_Battle.View
         }
     }
 }
+
 // [SerializeField] private PartyData enemyGroup;
 //
 //
