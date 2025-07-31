@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using TB_Battle.Controller;
@@ -7,6 +8,7 @@ using TB_Battle.Utils;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Object = UnityEngine.Object;
 
 namespace TB_Battle.View
 {
@@ -14,18 +16,33 @@ namespace TB_Battle.View
     {
         private List<ButtonOptionsDictionary> _buttonOptionsDictionary;
         
+        protected enum MenuOptions
+        {
+            Await,
+            Defend,
+            Attack,
+            UseItem
+        };
+
+        private static MenuOptions _menuOption;
         protected void Start(PartyData playerGroup, PartyData enemyGroup)
         {
             CombatController.Initialize(playerGroup,enemyGroup, CombatController.Turn.Player);
         }
 
         protected void ShowActionsOfHeroOnGUI(
-            List<IAction> actions, RectTransform parent, TMP_FontAsset fontAsset, GameObject prefab = null)
+            MenuOptions menuOption, 
+            List<IAction> actions, 
+            RectTransform parent, 
+            TMP_FontAsset fontAsset, 
+            GameObject prefab = null)
         {
+            _menuOption = menuOption;
+            
             if (_buttonOptionsDictionary != null)
             {
-                foreach (var option in _buttonOptionsDictionary) 
-                    Object.Destroy(option.buttonObject);
+                foreach (var buttonOption in _buttonOptionsDictionary) 
+                    Object.Destroy(buttonOption.buttonObject);
                 
                 _buttonOptionsDictionary.Clear();
             }
@@ -75,7 +92,7 @@ namespace TB_Battle.View
             textRT.offsetMax = Vector2.zero;
 
             const int value = 99;
-            button.onClick.AddListener(() => SelectOption(value));
+            button.onClick.AddListener(() => SelectAction(value));
             
             return (buttonObject, tmpText);
         }
@@ -95,49 +112,28 @@ namespace TB_Battle.View
             var button = buttonObject.GetComponent<Button>();
             if (button == null) return (buttonObject, tmpText);
             const int value = 99;
-            button.onClick.AddListener(() => SelectOption(value));
+            button.onClick.AddListener(() => SelectAction(value));
 
             return (buttonObject, tmpText);
         }
-
         
         [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-        protected static void SelectOption(int value)
+        protected static void SelectAction(int value)
         {
             Debug.Log($"Button Pressed with value: {value}");
-            
+            switch (_menuOption)
+            {
+                case MenuOptions.Await:
+                    break;
+                case MenuOptions.Defend:
+                    break;
+                case MenuOptions.Attack:
+                    break;
+                case MenuOptions.UseItem:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 }
-
-// [SerializeField] private PartyData enemyGroup;
-//
-//
-// private CombatController _controller;
-//
-//
-// private void Start()
-// {
-//     _controller.Initialize(
-//         playerGroup, 
-//         enemyGroup, 
-//         CombatController.Turn.Player);
-// }
-//
-// public void SelectOption(MenuButtons option) => _menuSelected = option;
-//
-// public enum MenuButtons { Await, Defend, Attack, UseItem }
-//
-// private MenuButtons _menuSelected;
-// [SerializeField] private List<ButtonOptionsDictionary> buttonOptions;
-//
-// private void ShowOptions(MenuButtons option)
-// {
-//     var attacks = playerGroup.entities[0].attacks;
-//
-//     for (var i = 0; i < buttonOptions.Count && i < attacks.Count; i++)
-//     {
-//         buttonOptions[i].text.text = attacks[i].attackName;
-//     }
-// }
-//
