@@ -1,4 +1,3 @@
-using TB_Battle.Controller;
 using TB_Battle.Model.Party;
 
 namespace TB_Battle.State
@@ -12,11 +11,12 @@ namespace TB_Battle.State
         {
             _playerParty = source; 
             _enemyParty = targetParty;
+            // todo: show UI
+            
         }
 
         public void Execute()
         {
-            // todo: show UI
             throw new System.NotImplementedException();
         }
 

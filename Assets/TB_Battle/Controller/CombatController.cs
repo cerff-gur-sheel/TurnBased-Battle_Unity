@@ -28,7 +28,7 @@ namespace TB_Battle.Controller
             Enemy = new EnemyParty(enemyData);
         }
 
-        protected static void CombatLoop()
+        internal static void CombatLoop()
         {
             if (!Player.IsGroupAlive || !Enemy.IsGroupAlive) return;
 

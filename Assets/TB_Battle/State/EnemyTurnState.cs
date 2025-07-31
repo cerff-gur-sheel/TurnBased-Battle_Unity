@@ -1,10 +1,8 @@
 using System;
 using System.Linq;
-using TB_Battle.Controller;
 using TB_Battle.Model.Action;
 using TB_Battle.Model.Entity;
 using TB_Battle.Model.Party;
-using UnityEngine;
 using Random = System.Random;
 
 namespace TB_Battle.State
