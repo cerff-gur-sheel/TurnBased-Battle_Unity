@@ -11,8 +11,8 @@ using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
 namespace TB_Battle.View
-{
-    public class CombatView 
+{ 
+    public class CombatView : CombatController
     {
         private List<ButtonOptionsDictionary> _buttonOptionsDictionary;
         
@@ -27,7 +27,8 @@ namespace TB_Battle.View
         private static MenuOptions _menuOption;
         protected void Start(PartyData playerGroup, PartyData enemyGroup)
         {
-            CombatController.Initialize(playerGroup,enemyGroup, CombatController.Turn.Player);
+            Initialize(playerGroup,enemyGroup, CombatController.Turn.Player);
+            CombatLoop();
         }
 
         protected void ShowActionsOfHeroOnGUI(

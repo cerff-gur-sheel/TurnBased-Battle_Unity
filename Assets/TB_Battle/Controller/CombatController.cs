@@ -1,10 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
 using TB_Battle.Data;
 using TB_Battle.Model.Party;
 using TB_Battle.State;
 
 namespace TB_Battle.Controller
 {
-    public static class CombatController
+    public class CombatController
     {
         public enum Turn
         {
@@ -16,6 +17,9 @@ namespace TB_Battle.Controller
 
         private static IParty Player { get; set; }
         private static IParty Enemy { get; set; }
+
+        [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")] 
+        public static ITurnState CurrentTurnState { get; private set; }
         
         internal static void Initialize(PartyData playerData, PartyData enemyData, Turn initialTurn)
         {
@@ -24,17 +28,17 @@ namespace TB_Battle.Controller
             Enemy = new EnemyParty(enemyData);
         }
 
-        private static void CombatLoop()
+        protected static void CombatLoop()
         {
             if (!Player.IsGroupAlive || !Enemy.IsGroupAlive) return;
-            if (_currentTurn == Turn.Player)
-            {
-                
-            }
-            else
-            {
-                
-            }
+
+            CurrentTurnState = _currentTurn == Turn.Player
+                ? CurrentTurnState = new PlayerTurnState()
+                : CurrentTurnState = new EnemyTurnState();
+
+            var source = _currentTurn == Turn.Player ? Player : Enemy; 
+            var target = _currentTurn == Turn.Player ? Enemy : Player; 
+            CurrentTurnState.Enter(source, target);
         }
 
         public static void ToggleTurn()
